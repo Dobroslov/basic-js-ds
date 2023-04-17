@@ -13,24 +13,56 @@ const { NotImplementedError } = require('../extensions/index.js');
  * queue.dequeue(); // returns the top element from queue and deletes it, returns 1
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
+
+class ListNode {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
 class Queue {
-
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor() {
+    this.head = null;
+    this.tail = null;
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  enqueue(value) {
+    // добавить элемент
+    const newNode = new ListNode(value);
+    if (this.tail) {
+      // если элемент не первый, добавить новый
+      this.tail.next = newNode;
+      this.tail = newNode;
+    } else {
+      // добавить первый элемент
+      this.head = newNode;
+      this.tail = newNode;
+    }
   }
-
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    // извлекает значение из головы очереди и удаляет его
+    if (!this.head) {
+      // если очередь пуста
+      return null;
+    }
+    let dequeuedValue = this.head.value;
+    this.head = this.head.next;
+    return dequeuedValue;
+  }
+  getUnderlyingList() {
+    // возвращает нижележащий связанный список
+    console.log(this.head);
+    return this.head;
+  }
+  print() {
+    let current = this.head;
+    while (current) {
+      console.log(current.value);
+      current = current.next;
+    }
   }
 }
 
 module.exports = {
-  Queue
+  Queue,
 };
