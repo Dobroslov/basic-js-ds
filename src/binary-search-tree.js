@@ -128,22 +128,43 @@ class BinarySearchTree {
         if (parent.data > node.data) {
           if (node.right) {
             parent.left = node.right;
+            node.right.setParent(parent);
+            if (node.left) {
+              this.insertNode(node.right, node.left);
+            }
           } else if (node.left) {
             parent.left = node.left;
+            node.left.setParent(parent);
           } else {
             parent.left = null;
           }
         } else {
           if (node.left) {
             parent.right = node.left;
+            node.left.setParent(parent);
+            if (node.right) {
+              this.insertNode(node.left, node.right);
+            }
           } else if (node.right) {
             parent.right = node.right;
+            node.right.setParent(parent);
           } else {
             parent.right = null;
           }
         }
       } else {
-        this.rootNode = null;
+        if (node.left) {
+          this.rootNode = node.left;
+          node.left.setParent(null);
+          if (node.right) {
+            this.insertNode(node.left, node.right);
+          }
+        } else if (node.right) {
+          this.rootNode = node.right;
+          node.right.setParent(null);
+        } else {
+          this.rootNode = null;
+        }
       }
     }
   }
